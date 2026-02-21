@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プライバシーポリシー - Tarotto</title>
+    <style>
+        :root {
+            --bg: #0A0A1A;
+            --gold: #C9A84D;
+            --white: #E8E1D2;
+            --silver: #B8B8CC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 60px 24px 80px;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .app-name {
+            font-size: 14px;
+            color: var(--silver);
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .last-updated {
+            font-size: 13px;
+            color: var(--silver);
+            opacity: 0.6;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: var(--gold);
+            margin-top: 40px;
+            margin-bottom: 16px;
+            font-weight: 500;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(201,168,77,0.2);
+        }
+
+        p {
+            font-size: 15px;
+            color: var(--silver);
+            margin-bottom: 16px;
+        }
+
+        ul {
+            list-style: none;
+            margin-bottom: 16px;
+            padding-left: 0;
+        }
+
+        ul li {
+            font-size: 15px;
+            color: var(--silver);
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+        }
+
+        .highlight {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        table th,
+        table td {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(201,168,77,0.1);
+        }
+
+        table th {
+            color: var(--gold);
+            font-weight: 500;
+            width: 35%;
+        }
+
+        table td {
+            color: var(--silver);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .back-link:hover {
+            opacity: 0.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid rgba(201,168,77,0.1);
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 12px;
+            color: rgba(184,184,204,0.4);
+        }
+
+        /* English section */
+        .lang-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid rgba(201,168,77,0.2);
+        }
+
+        .lang-label {
+            font-size: 12px;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>プライバシーポリシー</h1>
+        <p class="app-name">Tarotto - タロット占い</p>
+        <p class="last-updated">最終更新日: 2026年2月22日</p>
+
+        <h2>1. はじめに</h2>
+        <p>Tarotto（以下「本アプリ」）は、ユーザーのプライバシーを最大限に尊重します。本プライバシーポリシーでは、本アプリにおけるデータの取り扱いについてご説明します。</p>
+
+        <h2>2. 収集するデータ</h2>
+        <p class="highlight">本アプリは、ユーザーの個人情報を一切収集しません。</p>
+        <p>すべてのデータはユーザーのデバイス内にのみ保存され、外部サーバーに送信されることはありません。</p>
+
+        <table>
+            <tr>
+                <th>データの種類</th>
+                <td>保存場所</td>
+            </tr>
+            <tr>
+                <th>ユーザー名</th>
+                <td>デバイス内（UserDefaults）</td>
+            </tr>
+            <tr>
+                <th>言語設定</th>
+                <td>デバイス内（UserDefaults）</td>
+            </tr>
+            <tr>
+                <th>占い履歴</th>
+                <td>デバイス内（SwiftData）</td>
+            </tr>
+            <tr>
+                <th>APIキー</th>
+                <td>デバイス内（Keychain）</td>
+            </tr>
+            <tr>
+                <th>購入情報</th>
+                <td>Apple経由（App Store）</td>
+            </tr>
+        </table>
+
+        <h2>3. 外部サービスとの通信</h2>
+        <p>本アプリは、以下の場合にのみ外部サーバーと通信します：</p>
+        <ul>
+            <li><span class="highlight">AI解釈機能の利用時</span> ユーザーが自分で設定したAPIキーを使用して、選択したAIプロバイダー（OpenAI、Anthropic Claude、Google Gemini）のサーバーに占い結果のテキストデータを送信します。</li>
+            <li><span class="highlight">アプリ内課金の処理時</span> — AppleのApp Storeサーバーと通信します。</li>
+        </ul>
+        <p>AI解釈機能は任意であり、APIキーを設定しない場合は外部通信は行われません。送信されるデータにはカードの配置と占いの質問内容のみが含まれ、ユーザーの個人情報は含まれません。</p>
+
+        <h2>4. トラッキング</h2>
+        <p class="highlight">本アプリはユーザーのトラッキングを一切行いません。</p>
+        <ul>
+            <li>広告トラッキングなし</li>
+            <li>アナリティクスツールなし</li>
+            <li>サードパーティSDKなし（StoreKitを除く）</li>
+            <li>IDFA（広告識別子）の取得なし</li>
+        </ul>
+
+        <h2>5. データの保護</h2>
+        <p>APIキーはAppleのKeychainに暗号化して保存されます。その他の設定データはデバイスのローカルストレージに保存され、デバイスのセキュリティ機能によって保護されます。</p>
+
+        <h2>6. データの削除</h2>
+        <p>ユーザーはいつでも設定画面の「全設定消去」機能を使用して、アプリ内に保存されたすべてのデータを削除できます。また、アプリをデバイスからアンインストールすることで、すべてのデータが完全に削除されます。</p>
+
+        <h2>7. 子どものプライバシー</h2>
+        <p>本アプリは、13歳未満のお子様を対象としたものではありません。13歳未満のお子様から意図的に個人情報を収集することはありません。</p>
+
+        <h2>8. ポリシーの変更</h2>
+        <p>本プライバシーポリシーは、必要に応じて更新されることがあります。重要な変更がある場合は、アプリ内でお知らせします。</p>
+
+        <h2>9. お問い合わせ</h2>
+        <p>プライバシーに関するご質問やご懸念がございましたら、以下までご連絡ください。</p>
+        <p><a href="mailto:support@tarotto.app" style="color: var(--gold);">support@tarotto.app</a></p>
+
+        <!-- English Version -->
+        <div class="lang-section">
+            <p class="lang-label">English</p>
+
+            <h1>Privacy Policy</h1>
+            <p class="app-name">Tarotto - Tarot Reading</p>
+            <p class="last-updated">Last updated: February 22, 2026</p>
+
+            <h2>1. Introduction</h2>
+            <p>Tarotto ("the App") respects your privacy. This Privacy Policy explains how we handle data within the App.</p>
+
+            <h2>2. Data Collection</h2>
+            <p class="highlight">This App does not collect any personal information.</p>
+            <p>All data is stored exclusively on your device and is never transmitted to external servers.</p>
+
+            <table>
+                <tr>
+                    <th>Data Type</th>
+                    <td>Storage Location</td>
+                </tr>
+                <tr>
+                    <th>User name</th>
+                    <td>On-device (UserDefaults)</td>
+                </tr>
+                <tr>
+                    <th>Language setting</th>
+                    <td>On-device (UserDefaults)</td>
+                </tr>
+                <tr>
+                    <th>Reading history</th>
+                    <td>On-device (SwiftData)</td>
+                </tr>
+                <tr>
+                    <th>API keys</th>
+                    <td>On-device (Keychain)</td>
+                </tr>
+                <tr>
+                    <th>Purchase info</th>
+                    <td>Via Apple (App Store)</td>
+                </tr>
+            </table>
+
+            <h2>3. External Communications</h2>
+            <p>The App communicates with external servers only in the following cases:</p>
+            <ul>
+                <li><span class="highlight">When using AI interpretation</span> — Using API keys that you configure, the App sends reading text data to your chosen AI provider (OpenAI, Anthropic Claude, or Google Gemini).</li>
+                <li><span class="highlight">In-App Purchase processing</span> — Communication with Apple's App Store servers.</li>
+            </ul>
+            <p>The AI interpretation feature is optional. If you do not configure an API key, no external communication occurs. Only card placement and reading question data are transmitted; no personal information is included.</p>
+
+            <h2>4. Tracking</h2>
+            <p class="highlight">This App does not track users in any way.</p>
+            <ul>
+                <li>No advertising tracking</li>
+                <li>No analytics tools</li>
+                <li>No third-party SDKs (except StoreKit)</li>
+                <li>No IDFA collection</li>
+            </ul>
+
+            <h2>5. Data Security</h2>
+            <p>API keys are encrypted and stored in Apple's Keychain. Other settings data is stored in the device's local storage and is protected by the device's security features.</p>
+
+            <h2>6. Data Deletion</h2>
+            <p>You can delete all data stored within the App at any time using the "Reset All Settings" feature in Settings. Uninstalling the App from your device will also completely remove all data.</p>
+
+            <h2>7. Children's Privacy</h2>
+            <p>This App is not intended for children under the age of 13. We do not knowingly collect personal information from children under 13.</p>
+
+            <h2>8. Policy Changes</h2>
+            <p>This Privacy Policy may be updated as needed. Significant changes will be communicated within the App.</p>
+
+            <h2>9. Contact</h2>
+            <p>If you have any questions or concerns about privacy, please contact us at:</p>
+            <p><a href="mailto:support@tarotto.app" style="color: var(--gold);">support@tarotto.app</a></p>
+        </div>
+
+        <a href="index.html" class="back-link">&larr; トップに戻る / Back to Top</a>
+
+        <footer>
+            <p>&copy; 2026 Tarotto. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

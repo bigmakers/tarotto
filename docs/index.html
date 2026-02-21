@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarotto - タロット占い</title>
+    <meta name="description" content="北斗七星スプレッドで気になるあの人の気持ちを占う。78枚フルデッキ対応の本格タロット占いアプリ。">
+    <style>
+        :root {
+            --bg: #0A0A1A;
+            --bg-light: #151530;
+            --gold: #C9A84D;
+            --gold-light: #E2C97A;
+            --purple: #7A5EA6;
+            --purple-light: #9B7FCA;
+            --white: #E8E1D2;
+            --silver: #B8B8CC;
+            --red: #CC3333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .stars::before,
+        .stars::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow:
+                120px 40px 0 var(--gold-light),
+                300px 120px 0 rgba(201,168,77,0.3),
+                80px 200px 0 rgba(201,168,77,0.5),
+                450px 80px 0 rgba(201,168,77,0.2),
+                200px 300px 0 rgba(201,168,77,0.4),
+                550px 180px 0 var(--gold-light),
+                30px 350px 0 rgba(201,168,77,0.3),
+                400px 250px 0 rgba(201,168,77,0.6),
+                150px 450px 0 rgba(201,168,77,0.2),
+                500px 350px 0 rgba(201,168,77,0.4),
+                250px 500px 0 rgba(201,168,77,0.3),
+                600px 50px 0 rgba(201,168,77,0.5),
+                350px 400px 0 rgba(201,168,77,0.2);
+            animation: twinkle 4s ease-in-out infinite alternate;
+        }
+
+        .stars::after {
+            animation-delay: 2s;
+            box-shadow:
+                50px 100px 0 rgba(201,168,77,0.4),
+                180px 250px 0 rgba(201,168,77,0.2),
+                320px 50px 0 rgba(201,168,77,0.5),
+                480px 300px 0 rgba(201,168,77,0.3),
+                100px 380px 0 rgba(201,168,77,0.6),
+                420px 150px 0 rgba(201,168,77,0.2),
+                260px 420px 0 rgba(201,168,77,0.4),
+                550px 280px 0 rgba(201,168,77,0.3);
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 60px;
+            background: linear-gradient(180deg, rgba(122,94,166,0.15) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: var(--gold);
+            letter-spacing: 8px;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+
+        .hero .subtitle {
+            font-size: 16px;
+            color: var(--silver);
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+        }
+
+        .hero .tagline {
+            font-size: 22px;
+            color: var(--white);
+            line-height: 2;
+            max-width: 500px;
+            margin: 0 auto 40px;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 40px auto;
+            opacity: 0.6;
+        }
+
+        /* Sections */
+        section {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+        }
+
+        /* Empathy */
+        .empathy p {
+            font-size: 17px;
+            color: var(--silver);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .empathy .question {
+            color: var(--white);
+            font-size: 16px;
+            padding: 12px 0;
+            border-left: 2px solid var(--gold);
+            padding-left: 16px;
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        /* Affirmation */
+        .affirmation {
+            background: linear-gradient(180deg, rgba(122,94,166,0.08) 0%, transparent 100%);
+            border-radius: 16px;
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        .affirmation p {
+            font-size: 16px;
+            color: var(--silver);
+            margin-bottom: 16px;
+        }
+
+        .affirmation .highlight {
+            color: var(--gold-light);
+            font-size: 18px;
+        }
+
+        /* Features */
+        .features {
+            text-align: center;
+        }
+
+        .features .intro {
+            font-size: 20px;
+            color: var(--white);
+            margin-bottom: 32px;
+            line-height: 1.9;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            background: rgba(122,94,166,0.08);
+            border: 1px solid rgba(201,168,77,0.15);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .feature-card .icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .feature-card h3 {
+            color: var(--gold);
+            font-size: 15px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .feature-card p {
+            color: var(--silver);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* Scenes */
+        .scenes {
+            text-align: center;
+        }
+
+        .scene-list {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .scene-list li {
+            color: var(--silver);
+            font-size: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(201,168,77,0.1);
+        }
+
+        .scene-list li::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        /* Trust */
+        .trust {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .trust .quote {
+            font-size: 16px;
+            color: var(--silver);
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .trust p {
+            font-size: 16px;
+            color: var(--silver);
+            margin-bottom: 16px;
+        }
+
+        .trust .emphasis {
+            color: var(--white);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            padding: 60px 24px 80px;
+            background: linear-gradient(180deg, transparent, rgba(122,94,166,0.1));
+        }
+
+        .cta h2 {
+            font-size: 22px;
+            color: var(--white);
+            margin-bottom: 12px;
+            font-weight: 400;
+        }
+
+        .cta .price {
+            font-size: 14px;
+            color: var(--silver);
+            margin-bottom: 32px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--bg);
+            font-size: 16px;
+            font-weight: 600;
+            padding: 16px 48px;
+            border-radius: 12px;
+            text-decoration: none;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201,168,77,0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            border-top: 1px solid rgba(201,168,77,0.1);
+        }
+
+        footer a {
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 13px;
+            margin: 0 16px;
+        }
+
+        footer a:hover {
+            color: var(--gold);
+        }
+
+        footer .copyright {
+            color: rgba(184,184,204,0.4);
+            font-size: 12px;
+            margin-top: 16px;
+        }
+
+        /* Responsive */
+        @media (min-width: 600px) {
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: 4px;
+            }
+
+            .hero .tagline {
+                font-size: 18px;
+            }
+
+            section {
+                padding: 32px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+
+    <div class="content">
+        <!-- Hero -->
+        <header class="hero">
+            <h1>Tarotto</h1>
+            <p class="subtitle">北斗七星スプレッド</p>
+            <div class="divider"></div>
+            <p class="tagline">
+                気になるあの人の今を、<br>
+                カードに聞いてみませんか。
+            </p>
+        </header>
+
+        <!-- Empathy -->
+        <section class="empathy">
+            <p class="section-title">あなたの気持ち</p>
+            <p>ふと気づけば、あの人のことを考えている自分がいる。</p>
+            <div class="question">最近、連絡が減った気がする</div>
+            <div class="question">あの態度、どういう意味だったんだろう</div>
+            <div class="question">私のこと、どう思ってるの...？</div>
+            <p style="margin-top: 24px;">聞きたいけど、聞けない。<br>その気持ち、よくわかります。</p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Affirmation -->
+        <section>
+            <div class="affirmation">
+                <p class="section-title">あなたは悪くない</p>
+                <p>誰かを想う気持ちに、正しいも間違いもありません。</p>
+                <p>ただ、答えのない問いをひとりで抱え続けるのは、少し疲れますよね。</p>
+                <p>友だちに相談しても「考えすぎだよ」と言われるだけ。<br>占いに行きたくても、時間もタイミングも合わない。</p>
+                <p class="highlight" style="margin-top: 24px;">あなたが悪いのではありません。<br>ただ「いつでも、そっと頼れる場所」がなかっただけ。</p>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Features -->
+        <section class="features">
+            <p class="section-title">Tarottoについて</p>
+            <p class="intro">
+                あなたの手の中で静かに待っている、<br>
+                パーソナルな占いパートナー。
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon">&#11088;</div>
+                    <h3>北斗七星スプレッド</h3>
+                    <p>7枚のカードがあの人の状況、あなたへの気持ち、本音、そしてこれからを照らし出します。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">&#127183;</div>
+                    <h3>78枚フルデッキ</h3>
+                    <p>大アルカナ22枚と小アルカナ56枚。正位置・逆位置の詳細な解釈付き。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">&#129302;</div>
+                    <h3>AI解釈機能</h3>
+                    <p>あなたの状況に寄り添った、より深い言葉をAIが届けます。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">&#127760;</div>
+                    <h3>日本語・英語対応</h3>
+                    <p>カード解釈からUI全体まで、2言語でご利用いただけます。</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Scenes -->
+        <section class="scenes">
+            <p class="section-title">あなたのペースで</p>
+            <p style="font-size: 16px; color: var(--silver); margin-bottom: 24px;">
+                占い師に予約する必要もなければ、<br>
+                誰かに打ち明ける必要もありません。
+            </p>
+            <ul class="scene-list">
+                <li>通勤電車の中で、そっとカードを引く</li>
+                <li>夜、ベッドの中で気持ちを整理する</li>
+                <li>モヤモヤした朝、一枚めくって深呼吸する</li>
+            </ul>
+            <p style="font-size: 17px; color: var(--white); margin-top: 24px; font-weight: 500;">
+                あなただけの時間、あなただけの占い。
+            </p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Trust -->
+        <section class="trust">
+            <p class="section-title">カードが教えてくれること</p>
+            <p class="quote">「占いアプリって、本当に当たるの？」</p>
+            <p>Tarottoは「当てる」アプリではありません。</p>
+            <p>カードが映し出すのは、<br>あなた自身が気づいていない心の声。</p>
+            <p>結果を見て「やっぱりそうだったんだ」と腑に落ちたり、<br>「そういう見方もあるんだ」と少し気持ちが軽くなったり。</p>
+            <p class="emphasis" style="margin-top: 24px;">
+                大切なのは、答えを「もらう」ことではなく、<br>
+                自分の気持ちに「気づく」きっかけを持つこと。
+            </p>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta">
+            <h2>まずは一度、カードに聞いてみませんか。</h2>
+            <p class="price">&#165;200 - コンビニコーヒー1杯より軽い気持ちで</p>
+            <a href="https://apps.apple.com/app/tarotto/id000000000" class="cta-button">App Storeで見る</a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div>
+                <a href="privacy.html">プライバシーポリシー</a>
+                <a href="mailto:support@tarotto.app">お問い合わせ</a>
+            </div>
+            <p class="copyright">&copy; 2026 Tarotto. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
